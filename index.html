@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Wien — explorer les étoiles</title>
+<style>
+:root{--bg:#080e22;--panel:#111c38;--panel2:#172647;--ink:#f4f7ff;--muted:#bac7e7;--line:#33466e;--cyan:#6be7ff;--gold:#ffd76b;--violet:#c5a1ff;--green:#7cf0b0;--red:#ff9b9b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#1a2c58 0,#080e22 48%,#050916 100%);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(2px 2px at 10% 20%,white 50%,transparent 60%),radial-gradient(1px 1px at 70% 35%,white 50%,transparent 60%),radial-gradient(1.5px 1.5px at 43% 80%,white 50%,transparent 60%),radial-gradient(1px 1px at 88% 75%,white 50%,transparent 60%);background-size:190px 170px,230px 200px,170px 240px,260px 190px;z-index:-1}
+.wrap{max-width:1150px;margin:auto;padding:0 16px}header{padding:34px 0 24px;text-align:center}header .tag{display:inline-block;border:1px solid #46669e;border-radius:99px;padding:5px 12px;color:var(--cyan);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:14px 0 10px;background:linear-gradient(90deg,#fff,var(--cyan),var(--violet));background-clip:text;color:transparent}header p{color:var(--muted);max-width:760px;margin:0 auto}
+.progress-wrap{margin:18px auto 0;max-width:560px;text-align:left}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;margin-bottom:5px}.progress{height:8px;border-radius:99px;background:#263654;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .5s}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px auto 22px}.navbtn,button{border:1px solid #3d5684;background:#1b2b50;color:var(--ink);font:inherit;font-weight:750;border-radius:12px;padding:10px 14px;cursor:pointer;transition:transform .18s,background .18s,border-color .18s}.navbtn:hover,button:hover{transform:translateY(-2px);border-color:var(--cyan)}.navbtn.active,button.primary{background:linear-gradient(110deg,#1267a2,#5941a5);border-color:#74cfff}.navbtn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+main{padding-bottom:40px}.panel{display:none;animation:rise .35s ease}.panel.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(145deg,#142343ee,#0d1730f2);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 12px 35px #0003}h2{font-size:1.35rem;margin:0 0 8px}h3{font-size:1.02rem;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:.88rem;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}.s7{grid-column:span 7}.s5{grid-column:span 5}.s12{grid-column:span 12}
+.formula{border:1px solid #4a6595;border-radius:16px;text-align:center;padding:15px;background:#0a1530;margin:14px 0}.formula strong{font-size:clamp(1.45rem,4vw,2.2rem);color:var(--gold)}.formula small{display:block;color:var(--muted)}
+.spectrum{height:56px;border-radius:12px;overflow:hidden;display:flex;border:1px solid #ffffff40;margin:12px 0 6px}.band{display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:.8rem;font-weight:850}.uv{width:29%;background:linear-gradient(90deg,#27154f,#6e28a8)}.vis{width:42%;background:linear-gradient(90deg,#6234db,#226ce9,#1dd3d0,#53df59,#f4e63b,#ff9c27,#e93436);color:#071021}.ir{width:29%;background:linear-gradient(90deg,#6c2c2c,#b44e27,#3a202b)}
+.scale{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}.controls{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:14px 0}.controls input[type=range]{width:100%;accent-color:var(--cyan)}input[type=number],select{background:#081329;color:var(--ink);border:1px solid #4a5e83;border-radius:10px;padding:10px;font:inherit;width:100%}.val{color:var(--cyan);font-weight:850;white-space:nowrap}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-weight:750;font-size:.9rem;margin-bottom:6px}.result{display:flex;align-items:center;gap:16px;background:#081329;border:1px solid #314a76;border-radius:16px;padding:16px;margin-top:12px}.star{width:74px;height:74px;border-radius:50%;background:#fff0a2;box-shadow:0 0 24px #ffe58c;flex:none;animation:pulse 2.8s ease-in-out infinite}.big{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.1;color:white}.result p{margin:5px 0 0;color:var(--muted)}@keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.2)}}
+svg{width:100%;height:auto;display:block;background:#071126;border:1px solid #31466e;border-radius:14px}.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{display:inline-block;border:1px solid #47618e;border-radius:99px;padding:4px 10px;color:var(--cyan);font-size:.8rem;font-weight:800}
+.star-buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.star-choice{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;background:#0b1630;border:1px solid #31466e;border-radius:13px;cursor:pointer}.star-choice:hover,.star-choice.selected{border-color:var(--gold);background:#1b2a49}.orb{width:34px;height:34px;border-radius:50%;box-shadow:0 0 16px currentColor;animation:pulse 3s infinite}.red{color:#ff624e;background:#ff624e}.orange{color:#ffab40;background:#ffab40}.yellow{color:#ffe36c;background:#ffe36c}.white{color:#dbeaff;background:#dbeaff}.blue{color:#448cff;background:#448cff}
+.activity{border:1px solid #33496e;border-radius:15px;padding:16px;margin:12px 0;background:#0b1630}.activity p{margin-top:0}.options{display:grid;gap:8px;margin:12px 0}.option{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid #3a4f75;border-radius:11px;cursor:pointer;background:#101d39}.option:hover{border-color:var(--cyan)}.option input{margin-top:5px;accent-color:#7edcff}.feedback{border-radius:11px;padding:12px;margin-top:10px;display:none}.feedback.show{display:block;animation:rise .25s}.feedback.good{background:#103c35;border:1px solid #2a9a75;color:#caffdf}.feedback.bad{background:#48222e;border:1px solid #b9576b;color:#ffe1e5}.feedback strong{display:block;margin-bottom:3px}
+.missionhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.score{font-weight:900;color:var(--gold)}.mission{border-left:3px solid var(--violet);padding-left:14px;margin:16px 0}.chip{display:inline-block;background:#24345a;border-radius:8px;padding:3px 8px;color:#dce8ff;font-size:.82rem}.matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.matchrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center}.matchrow select{min-width:0}.complete{border:1px solid #2f8d72;background:#10382f;padding:14px;border-radius:12px;margin-top:12px}
+footer{text-align:center;padding:8px 16px 30px;color:#8799c2;font-size:.85rem}
+@media(max-width:780px){.s7,.s5{grid-column:span 12}.star-buttons{grid-template-columns:repeat(3,1fr)}.twocol{grid-template-columns:1fr}.card{padding:16px}.result{align-items:flex-start}.matchrow{grid-template-columns:1fr}.spectrum .band{font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="wrap">
+<span class="tag">Physique · Astronomie · Activité interactive/Developed by Prof. AL KWATLI D.M.A (Email: dr.al kwatli@gmail.com)</span>
+<h1>MISSION WIEN</h1>
+<p>Deviens astronome : observe la lumière, repère le maximum d’intensité et estime la température des étoiles.</p>
+<div class="progress-wrap"><div class="progress-label"><span>Progression des missions</span><strong id="progressText">0 / 6 activités validées</strong></div><div class="progress"><span id="progressBar"></span></div></div>
+<nav aria-label="Navigation des activités">
+<button class="navbtn active" data-panel="explore">🔭 Explorer</button>
+<button class="navbtn" data-panel="spectrum">🌈 Spectre</button>
+<button class="navbtn" data-panel="stars">⭐ Enquête étoiles</button>
+<button class="navbtn" data-panel="lab">🧪 Défi expérimental</button>
+<button class="navbtn" data-panel="quiz">🧠 Quiz complet</button>
+</nav>
+</header>
+<main class="wrap">
+<section id="explore" class="panel active">
+<div class="grid">
+<div class="card s7">
+<h2>Mission 1 — Fais bouger le maximum !</h2>
+<p class="muted">Déplace le curseur. La courbe change et la température est recalculée automatiquement. Observe la relation inverse entre λ<sub>max</sub> et T.</p>
+<div class="spectrum"><div class="band uv">UV<br>invisible</div><div class="band vis">Spectre visible</div><div class="band ir">IR<br>invisible</div></div>
+<div class="scale"><span>100 nm</span><span>400 nm</span><span>700 nm</span><span>1 000 nm</span></div>
+<div class="controls"><input id="lambdaRange" type="range" min="100" max="1000" value="500" step="1" aria-label="Choisir la longueur d'onde du maximum"><span class="val" id="lambdaLabel">500 nm</span></div>
+<div class="twocol"><div class="field"><label for="lambdaInput">Ou entre λ<sub>max</sub> en nm</label><input id="lambdaInput" type="number" min="100" max="1000" value="500"></div><div class="field"><label for="quickSelect">Essai rapide</label><select id="quickSelect"><option value="">Choisir…</option><option value="750">Rouge · 750 nm</option><option value="620">Orange · 620 nm</option><option value="500">Jaune-vert · 500 nm</option><option value="400">Violet · 400 nm</option><option value="300">UV · 300 nm</option><option value="900">IR · 900 nm</option></select></div></div>
+<div class="formula"><strong>λ<sub>max</sub> × T = b</strong><small>b ≈ 2,898 × 10⁶ nm·K</small></div>
+<div class="result"><div class="star" id="mainStar"></div><div><div class="big" id="tempK">5 796 K</div><p id="tempC">≈ 5 523 °C</p><p id="tempLabel">Maximum dans le visible</p></div></div>
+<div class="btnrow"><button class="primary" id="randomExperiment">🎲 Donne-moi une valeur au hasard</button><button id="markExplore">Valider cette exploration ✓</button></div><div id="exploreFeedback" class="feedback"></div>
+</div>
+<div class="card s5">
+<h2>Lis la courbe</h2><p class="muted">Le point lumineux indique le sommet du spectre. Les valeurs sont schématiques : un spectre réel peut présenter des raies.</p>
+<svg id="mainChart" viewBox="0 0 520 310" role="img" aria-label="Courbe d'intensité en fonction de la longueur d'onde"></svg>
+<div class="activity"><strong>À observer</strong><p id="observeText">Quand λmax augmente, la température calculée diminue.</p><span class="pill" id="zonePill">Domaine visible</span></div>
+</div>
+<div class="card s12">
+<h2>Mini-défi — Prédis avant de calculer</h2>
+<p>Si on déplace le maximum de 700 nm vers 350 nm, la température…</p>
+<div class="options"><label class="option"><input type="radio" name="prediction" value="low">diminue, car la longueur d’onde diminue</label><label class="option"><input type="radio" name="prediction" value="high">augmente, car la longueur d’onde est divisée par deux</label><label class="option"><input type="radio" name="prediction" value="same">reste identique</label></div>
+<button class="primary" id="checkPrediction">Vérifier ma prédiction</button><div id="predictionFeedback" class="feedback"></div>
+</div>
+</div>
+</section>
+<section id="spectrum" class="panel">
+<div class="card">
+<h2>Mission 2 — Visible ou invisible ?</h2>
+<p class="muted">Le spectre électromagnétique va bien au-delà des couleurs visibles. Clique sur une zone pour découvrir ce qu’on peut y observer.</p>
+<div class="spectrum" style="height:78px"><button class="band uv" data-zone="uv" style="border:0;border-radius:0;width:29%">Ultraviolet<br>UV</button><button class="band vis" data-zone="vis" style="border:0;border-radius:0;width:42%;color:#071021">VISIBLE</button><button class="band ir" data-zone="ir" style="border:0;border-radius:0;width:29%">Infrarouge<br>IR</button></div>
+<div class="scale"><span>λ courte · énergie photon élevée</span><span>λ longue · énergie photon plus faible</span></div>
+<div id="zoneInfo" class="activity"><h3>Choisis une zone du spectre</h3><p>Les télescopes et détecteurs adaptés permettent d’étudier les longueurs d’onde invisibles à l’œil.</p></div>
+<h3>Défi de classement</h3><p>Associe chaque observation à une zone du spectre.</p>
+<div class="activity"><div class="matchrow"><strong>1. Lumière perçue par l’œil humain</strong><select id="m1"><option value="">Choisir…</option><option value="uv">Ultraviolet</option><option value="vis">Visible</option><option value="ir">Infrarouge</option></select></div><div class="matchrow"><strong>2. Rayonnement au-delà du rouge</strong><select id="m2"><option value="">Choisir…</option><option value="uv">Ultraviolet</option><option value="vis">Visible</option><option value="ir">Infrarouge</option></select></div><div class="matchrow"><strong>3. Rayonnement au-delà du violet</strong><select id="m3"><option value="">Choisir…</option><option value="uv">Ultraviolet</option><option value="vis">Visible</option><option value="ir">Infrarouge</option></select></div><button class="primary" id="checkMatch">Corriger le classement</button><div id="matchFeedback" class="feedback"></div></div>
+</div>
+</section>
+<section id="stars" class="panel">
+<div class="card">
+<h2>Mission 3 — Enquête sur les étoiles</h2>
+<p class="muted">Choisis une étoile. La couleur est une illustration, tandis que le calcul utilise une longueur d’onde du maximum de spectre. Les valeurs sont des exemples pédagogiques et non des mesures exactes de chaque étoile.</p>
+<div class="star-buttons">
+<button class="star-choice" data-star="red"><span class="orb red"></span>Rouge</button><button class="star-choice" data-star="orange"><span class="orb orange"></span>Orange</button><button class="star-choice" data-star="yellow"><span class="orb yellow"></span>Jaune</button><button class="star-choice" data-star="white"><span class="orb white"></span>Blanche</button><button class="star-choice" data-star="blue"><span class="orb blue"></span>Bleue</button>
+</div>
+<div class="grid"><div class="card s5" style="margin:0"><div class="result"><div class="star" id="chosenStar"></div><div><div class="big" id="starName">Étoile jaune</div><p id="starTypeText">Exemple proche du Soleil</p></div></div><div class="field" style="margin-top:14px"><label for="starLambda">λ<sub>max</sub> (nm) — modifie la valeur</label><input id="starLambda" type="number" min="100" max="3000" value="500"></div><div class="result"><div><div class="big" id="starTemp">5 796 K</div><p id="starC">≈ 5 523 °C</p></div></div></div>
+<div class="card s7" style="margin:0"><h3>Comment interpréter ?</h3><svg id="starChart" viewBox="0 0 520 260" role="img" aria-label="Spectre de l'étoile sélectionnée"></svg><p class="small" id="starExplanation">Le maximum de la courbe donne λmax.</p></div></div>
+<div class="activity"><strong>Question d’astronome</strong><p>Pourquoi la couleur seule ne suffit-elle pas toujours à connaître exactement la température ?</p><div class="options"><label class="option"><input type="radio" name="starReason" value="a">Parce qu’il faut mesurer le spectre et tenir compte des caractéristiques de l’étoile.</label><label class="option"><input type="radio" name="starReason" value="b">Parce que toutes les étoiles ont la même température.</label><label class="option"><input type="radio" name="starReason" value="c">Parce que la loi de Wien ne s’applique qu’à la Terre.</label></div><button class="primary" id="checkStarReason">Vérifier</button><div id="starReasonFeedback" class="feedback"></div></div>
+</div>
+</section>
+<section id="lab" class="panel">
+<div class="card">
+<h2>Mission 4 — Le laboratoire : trouve la température cachée</h2>
+<p class="muted">Une observation a été faite. Tu connais λ<sub>max</sub>, mais la température est cachée. Estime-la puis vérifie ton résultat.</p>
+<div class="activity"><div class="missionhead"><span class="chip">Dossier d'observation</span><span class="pill" id="labLevel">Dossier 1 / 3</span></div><h3 id="labQuestion">Le spectre a un maximum à 580 nm.</h3><p id="labHint">Indice : T = 2 898 000 / λmax.</p><div class="field"><label for="guessTemp">Ta température estimée (K)</label><input id="guessTemp" type="number" min="100" max="100000" placeholder="Ex. 5000"></div><div class="btnrow"><button class="primary" id="checkLab">Analyser le dossier</button><button id="nextLab">Dossier suivant →</button></div><div id="labFeedback" class="feedback"></div></div>
+<div class="activity"><h3>Expérience libre</h3><p>Choisis une température et prédis où se trouvera le maximum du spectre.</p><div class="field"><label for="tempRange">Température de l’étoile : <span id="chosenTempLabel">6 000 K</span></label><input id="tempRange" type="range" min="2500" max="20000" step="100" value="6000" style="width:100%;accent-color:var(--violet)"></div><div class="result"><div><div class="big" id="inverseLambda">483 nm</div><p id="inverseZone">Maximum dans le visible</p></div></div><button class="primary" id="markLab">Valider mon expérience ✓</button><div id="labMarkFeedback" class="feedback"></div></div>
+</div>
+</section>
+<section id="quiz" class="panel">
+<div class="card">
+<div class="missionhead"><div><h2>Mission 5 — Quiz de fin</h2><p class="muted">Réponds aux six questions puis clique sur « Corriger toutes mes réponses ». Chaque correction donne une explication.</p></div><div class="score">Score : <span id="quizScore">— / 6</span></div></div>
+<div id="quizQuestions"></div>
+<div class="btnrow"><button class="primary" id="gradeQuiz">Corriger toutes mes réponses</button><button id="resetQuiz">Recommencer le quiz</button></div><div id="quizSummary" class="feedback"></div>
+</div>
+</section>
+</main>
+<footer>Mission Wien · Application pédagogique autonome · λmax T = b · Les courbes et exemples sont illustratifs.</footer>
+<script>
+const B=2.897772e6, $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('fr-FR');
+const done=new Set();
+function markDone(key){done.add(key);$('progressText').textContent=done.size+' / 6 activités validées';$('progressBar').style.width=(done.size/6*100)+'%';}
+function feedback(id,good,title,msg){const e=$(id);e.className='feedback show '+(good?'good':'bad');e.innerHTML='<strong>'+title+'</strong>'+msg;}
+function zone(l){return l<400?'Ultraviolet (invisible)':l>700?'Infrarouge (invisible)':'Spectre visible';}
+function color(l){if(l<380)return '#8d79ff';if(l<450)return '#648cff';if(l<495)return '#54caff';if(l<570)return '#70e66d';if(l<590)return '#ffeb6a';if(l<620)return '#ffad4e';return '#ff675c';}
+function chart(svgId,l,small=false){
+ const svg=$(svgId),W=520,H=small?260:310,left=48,right=15,top=18,bottom=small?38:43,pw=W-left-right,ph=H-top-bottom;
+ // Planck-like curve with maximum exactly at selected lambda, normalized for teaching.
+ let arr=[],max=0;for(let i=0;i<=180;i++){let x=100+i*10;let z=x/l;let y=Math.pow(z,-5)*Math.exp(-5*(1/z-1));if(!Number.isFinite(y)||y<0)y=0;arr.push([x,y]);max=Math.max(max,y);}
+ const px=x=>left+(x-100)/1800*pw,py=y=>top+ph-y/max*ph;
+ let path='';arr.forEach(([x,y],i)=>path+=(i?'L':'M')+px(x)+','+py(y)+' ');
+ const peakX=px(l),peakY=py(1),ticks=[100,500,900,1300,1700];
+ svg.innerHTML=`<defs><linearGradient id="${svgId}grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8153df"/><stop offset=".18" stop-color="#346cf2"/><stop offset=".32" stop-color="#29d5e0"/><stop offset=".45" stop-color="#4bdb74"/><stop offset=".56" stop-color="#f4e63b"/><stop offset=".72" stop-color="#ff972e"/><stop offset="1" stop-color="#d83337"/></linearGradient></defs>
+ ${ticks.map(x=>`<line x1="${px(x)}" y1="${top}" x2="${px(x)}" y2="${top+ph}" stroke="#1e3153"/><text x="${px(x)}" y="${H-13}" text-anchor="middle" font-size="11" fill="#aebfe2">${x}</text>`).join('')}
+ <line x1="${left}" y1="${top+ph}" x2="${W-right}" y2="${top+ph}" stroke="#7286ac"/><line x1="${left}" y1="${top}" x2="${left}" y2="${top+ph}" stroke="#7286ac"/>
+ <path d="${path} L${px(1900)},${top+ph} L${px(100)},${top+ph} Z" fill="url(#${svgId}grad)" opacity=".23"/><path d="${path}" fill="none" stroke="url(#${svgId}grad)" stroke-width="3"/>
+ <line x1="${peakX}" y1="${top}" x2="${peakX}" y2="${top+ph}" stroke="#ffe07b" stroke-width="2" stroke-dasharray="5 5"/><circle cx="${peakX}" cy="${peakY}" r="5" fill="#fff" stroke="#ffe07b" stroke-width="3"/>
+ <text x="${Math.max(left+6,Math.min(W-125,peakX+8))}" y="${top+16}" font-size="12" fill="#ffe07b">λmax ${Math.round(l)} nm</text>
+ <text x="${left+pw/2}" y="${H-1}" text-anchor="middle" font-size="11" fill="#aebfe2">Longueur d’onde (nm)</text>`;
+}
+function updateMain(value){
+ let l=Math.max(100,Math.min(1000,Number(value)||500)),t=B/l;
+ $('lambdaRange').value=l;$('lambdaInput').value=l;$('lambdaLabel').textContent=l+' nm';
+ $('tempK').textContent=fmt(t)+' K';$('tempC').textContent='≈ '+fmt(t-273.15)+' °C';$('tempLabel').textContent=zone(l);
+ $('mainStar').style.background=color(l);$('mainStar').style.boxShadow='0 0 28px '+color(l)+'99';chart('mainChart',l);
+ $('observeText').textContent=l<500?'Le maximum est du côté des courtes longueurs d’onde : la température est élevée.':l>700?'Le maximum est dans l’infrarouge : cette valeur correspond à une température plus basse.':'Observe comment le maximum se déplace lorsque tu modifies λmax.';
+ $('zonePill').textContent=zone(l);
+}
+$('lambdaRange').addEventListener('input',e=>updateMain(e.target.value));
+$('lambdaInput').addEventListener('input',e=>{if(e.target.value)updateMain(e.target.value)});
+$('quickSelect').addEventListener('change',e=>{if(e.target.value)updateMain(e.target.value)});
+$('randomExperiment').onclick=()=>{let l=Math.floor(150+Math.random()*800);updateMain(l);$('exploreFeedback').className='feedback show good';$('exploreFeedback').textContent='Nouvelle expérience : λmax = '+l+' nm. Avant de lire le résultat, prédis si l’étoile est plutôt chaude ou froide.'};
+$('markExplore').onclick=()=>{markDone('explore');feedback('exploreFeedback',true,'Exploration validée !','Tu as utilisé le curseur et observé le calcul de Wien. Essaie maintenant une longueur d’onde très différente.');};
+$('checkPrediction').onclick=()=>{const a=document.querySelector('input[name="prediction"]:checked');if(!a){feedback('predictionFeedback',false,'Choisis une réponse','Sélectionne une prédiction avant de vérifier.');return;}if(a.value==='high'){markDone('prediction');feedback('predictionFeedback',true,'Exact !','T = b / λ. Si λ est divisée par deux, T est multipliée par deux. Pour 700 nm, T ≈ 4 140 K ; pour 350 nm, T ≈ 8 279 K.');}else feedback('predictionFeedback',false,'Pas tout à fait','La loi de Wien donne T = b / λ. La température et la longueur d’onde du maximum varient en sens inverse : une longueur d’onde plus courte correspond à une température plus élevée.');};
+const zoneDetails={uv:['Ultraviolet (UV)','Longueurs d’onde plus courtes que la lumière violette, environ sous 400 nm. Invisibles à l’œil humain. Les étoiles très chaudes émettent beaucoup d’énergie dans l’UV. Il faut des détecteurs adaptés, souvent au-dessus de l’atmosphère.'],vis:['Lumière visible','Environ 400 à 700 nm : du violet au rouge. C’est la petite partie du spectre électromagnétique détectée par nos yeux. Un maximum dans le visible peut correspondre à plusieurs milliers de kelvins.'],ir:['Infrarouge (IR)','Longueurs d’onde plus longues que le rouge, au-delà d’environ 700 nm. Invisibles à l’œil humain. Les instruments infrarouges étudient notamment des objets plus froids ou masqués par la poussière.']};
+document.querySelectorAll('[data-zone]').forEach(b=>b.onclick=()=>{let d=zoneDetails[b.dataset.zone];$('zoneInfo').innerHTML='<h3>'+d[0]+'</h3><p>'+d[1]+'</p>';});
+$('checkMatch').onclick=()=>{let vals=[$('m1').value,$('m2').value,$('m3').value],ans=['vis','ir','uv'],n=vals.filter((v,i)=>v===ans[i]).length;if(n===3){markDone('spectrum');feedback('matchFeedback',true,'3 / 3 — Bravo !','La lumière visible est détectée par l’œil ; l’infrarouge se trouve au-delà du rouge ; l’ultraviolet au-delà du violet.');}else feedback('matchFeedback',false,n+' / 3 réponses correctes','Revois le sens du spectre : UV — violet — bleu — vert — jaune — orange — rouge — IR. Les zones UV et IR sont invisibles à l’œil.');};
+const starData={red:{name:'Étoile rouge',l:966,desc:'Exemple rouge : maximum dans l’infrarouge proche.',c:'#ff624e'},orange:{name:'Étoile orange',l:644,desc:'Exemple orange : maximum proche du rouge.',c:'#ffab40'},yellow:{name:'Étoile jaune',l:500,desc:'Exemple proche du Soleil : maximum vers 500 nm.',c:'#ffe36c'},white:{name:'Étoile blanche',l:290,desc:'Étoile chaude : maximum dans l’ultraviolet.',c:'#dbeaff'},blue:{name:'Étoile bleue',l:145,desc:'Étoile très chaude : maximum dans l’ultraviolet.',c:'#448cff'}};
+let chosen='yellow';
+function updateStar(){
+ let d=starData[chosen],l=Math.max(100,Math.min(3000,Number($('starLambda').value)||d.l)),t=B/l;
+ $('starLambda').value=l;$('starName').textContent=d.name;$('starTypeText').textContent=d.desc;
+ $('starTemp').textContent=fmt(t)+' K';$('starC').textContent='≈ '+fmt(t-273.15)+' °C';
+ $('chosenStar').style.background=d.c;$('chosenStar').style.boxShadow='0 0 28px '+d.c+'99';
+ $('starExplanation').textContent='Pour λmax = '+l+' nm : T = 2 897 772 / '+l+' ≈ '+fmt(t)+' K. '+zone(l)+'.';chart('starChart',l,true);
+}
+document.querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>{chosen=b.dataset.star;document.querySelectorAll('[data-star]').forEach(x=>x.classList.toggle('selected',x===b));$('starLambda').value=starData[chosen].l;updateStar();});
+$('starLambda').oninput=updateStar;
+$('checkStarReason').onclick=()=>{let a=document.querySelector('input[name="starReason"]:checked');if(a&&a.value==='a'){markDone('stars');feedback('starReasonFeedback',true,'Bonne réponse !','La couleur donne une indication, mais le spectre permet de repérer λmax. La composition, l’atmosphère et les raies spectrales influencent aussi la lumière observée.');}else feedback('starReasonFeedback',false,'Réessaie','Il faut mesurer le spectre de l’étoile. La couleur apparente seule n’est pas une mesure exacte de la température.');};
+const cases=[{l:580,answer:4996,question:'Dossier 1 : le maximum est à 580 nm.',hint:'Le maximum est dans le visible jaune-orange.'},{l:350,answer:8279,question:'Dossier 2 : le maximum est à 350 nm.',hint:'350 nm se situe dans l’ultraviolet, juste sous le visible.'},{l:850,answer:3409,question:'Dossier 3 : le maximum est à 850 nm.',hint:'850 nm se situe dans l’infrarouge.'}];let caseIndex=0;
+function showCase(){let c=cases[caseIndex];$('labLevel').textContent='Dossier '+(caseIndex+1)+' / '+cases.length;$('labQuestion').textContent=c.question;$('labHint').textContent='Indice : T = 2 897 772 / λmax. '+c.hint;$('guessTemp').value='';$('labFeedback').className='feedback';$('labFeedback').textContent='';}
+$('checkLab').onclick=()=>{let c=cases[caseIndex],g=Number($('guessTemp').value);if(!g){feedback('labFeedback',false,'Entre une estimation','Saisis une température en kelvins puis analyse le dossier.');return;}let t=B/c.l,err=Math.abs(g-t)/t;if(err<=.08){markDone('lab');feedback('labFeedback',true,'Très bonne estimation !','La valeur calculée est '+fmt(t)+' K. Ton estimation est à moins de 8 % du résultat.');}else feedback('labFeedback',false,'Continue à enquêter','La température calculée est '+fmt(t)+' K. Utilise T = 2 897 772 / '+c.l+' pour vérifier ton estimation. Ton écart est d’environ '+Math.round(err*100)+' %.');};
+$('nextLab').onclick=()=>{caseIndex=(caseIndex+1)%cases.length;showCase();};
+$('tempRange').oninput=()=>{let t=Number($('tempRange').value),l=B/t;$('chosenTempLabel').textContent=fmt(t)+' K';$('inverseLambda').textContent=Math.round(l)+' nm';$('inverseZone').textContent=zone(l);};
+$('markLab').onclick=()=>{markDone('lab');feedback('labMarkFeedback',true,'Expérience enregistrée','Tu as transformé une température en longueur d’onde : λmax = b / T. Essaie plusieurs températures et compare les résultats.');};
+const questions=[
+{q:'Quelle relation exprime la loi de déplacement de Wien ?',opts:['λmax + T = b','λmax × T = b','λmax / T = b'],a:1,why:'La longueur d’onde du maximum multipliée par la température absolue donne la constante b ≈ 2,898 × 10⁻³ m·K.'},
+{q:'Si λmax passe de 600 nm à 300 nm, la température…',opts:['est divisée par deux','double','reste identique'],a:1,why:'T = b / λ. Diviser la longueur d’onde par deux multiplie la température par deux.'},
+{q:'Quelle unité doit-on utiliser pour T dans la loi de Wien ?',opts:['Kelvin (K)','Degré Celsius (°C)','Nanomètre (nm)'],a:0,why:'La température de la formule est une température absolue en kelvins. Pour passer en °C, on soustrait 273,15 après le calcul.'},
+{q:'La zone visible du spectre correspond approximativement à…',opts:['1 à 10 nm','400 à 700 nm','1 000 à 2 000 nm'],a:1,why:'La lumière visible s’étend approximativement de 400 nm (violet) à 700 nm (rouge). Les limites varient légèrement selon les conventions.'},
+{q:'Que repère-t-on sur la courbe d’intensité pour appliquer Wien ?',opts:['Le point le plus bas','Une raie choisie au hasard','Le maximum global du continuum thermique'],a:2,why:'On cherche la longueur d’onde du maximum du rayonnement thermique, λmax. Une raie d’absorption isolée n’est pas le maximum du continuum.'},
+{q:'Quelle affirmation est la plus juste ?',opts:['Toutes les étoiles bleues ont exactement 20 000 K','La couleur seule donne toujours une température exacte','Le spectre permet une estimation, mais les étoiles ont des propriétés variées'],a:2,why:'Les températures varient d’une étoile à l’autre. Le spectre et son maximum donnent une estimation, mais l’analyse complète peut nécessiter de tenir compte de l’atmosphère et des raies.'}
+];
+function renderQuiz(){ $('quizQuestions').innerHTML=questions.map((q,i)=>`<div class="activity" id="question${i}"><strong>Question ${i+1} / ${questions.length}</strong><p>${q.q}</p><div class="options">${q.opts.map((o,j)=>`<label class="option"><input type="radio" name="quiz${i}" value="${j}">${o}</label>`).join('')}</div><div id="qfeedback${i}" class="feedback"></div></div>`).join('');}
+$('gradeQuiz').onclick=()=>{let score=0,answered=0;questions.forEach((q,i)=>{let a=document.querySelector(`input[name="quiz${i}"]:checked`);if(a)answered++;let ok=a&&Number(a.value)===q.a;if(ok)score++;feedback('qfeedback'+i,!!ok,ok?'Correct !':'À revoir',q.why+(a?'':' Tu n’as pas sélectionné de réponse.'));});$('quizScore').textContent=score+' / '+questions.length;if(score===questions.length){markDone('quiz');feedback('quizSummary',true,'Mission accomplie !','6 / 6 : tu sais utiliser la loi de Wien et interpréter le spectre.');}else feedback('quizSummary',false,'Résultat : '+score+' / '+questions.length,answered+' réponse(s) renseignée(s). Lis chaque correction, puis recommence pour améliorer ton score.');};
+$('resetQuiz').onclick=()=>{renderQuiz();$('quizScore').textContent='— / 6';$('quizSummary').className='feedback';$('quizSummary').textContent='';};
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.panel));});
+renderQuiz();updateMain(500);updateStar();showCase();
+</script>
+</body>
+</html>
