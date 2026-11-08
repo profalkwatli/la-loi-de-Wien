@@ -89,8 +89,13 @@ $('resetQuiz').onclick=()=>{renderQuiz();$('quizScore').textContent='— / 6';$(
 document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.panel));});
 renderQuiz();updateMain(500);updateStar();showCase();
 </script></body> </html>
+   
+        };
+    </script>
+</body>
+</html>
 
-    document.addEventListener("keydown", function (event){
+ document.addEventListener("keydown", function (event){
 
     if (event.ctrlKey){
 
@@ -108,10 +113,4 @@ renderQuiz();updateMain(500);updateStar();showCase();
             document.addEventListener('contextmenu',   
      event => event.preventDefault()  
 );
-
-
-        };
-    </script>
-</body>
-</html>
 
