@@ -1,4 +1,24 @@
- <!doctype html> <html lang="fr"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Mission Wien — explorer les étoiles</title><style>
+document.addEventListener("keydown", function (event){
+
+    if (event.ctrlKey){
+
+       event.preventDefault();
+
+    }
+
+    if(event.keyCode == 123){
+
+       event.preventDefault();
+
+    }
+
+});
+            document.addEventListener('contextmenu',   
+     event => event.preventDefault()  
+);
+
+
+<!doctype html> <html lang="fr"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Mission Wien — explorer les étoiles</title><style>
 :root{--bg:#080e22;--panel:#111c38;--panel2:#172647;--ink:#f4f7ff;--muted:#bac7e7;--line:#33466e;--cyan:#6be7ff;--gold:#ffd76b;--violet:#c5a1ff;--green:#7cf0b0;--red:#ff9b9b}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#1a2c58 0,#080e22 48%,#050916 100%);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(2px 2px at 10% 20%,white 50%,transparent 60%),radial-gradient(1px 1px at 70% 35%,white 50%,transparent 60%),radial-gradient(1.5px 1.5px at 43% 80%,white 50%,transparent 60%),radial-gradient(1px 1px at 88% 75%,white 50%,transparent 60%);background-size:190px 170px,230px 200px,170px 240px,260px 190px;z-index:-1}
@@ -91,10 +111,11 @@ renderQuiz();updateMain(500);updateStar();showCase();
 </script></body> </html>
    
         };
+
     </script>
 </body>
 </html>
- document.addEventListener("keydown", function (event){
+<script> document.addEventListener("keydown", function (event){
 
     if (event.ctrlKey){
 
@@ -108,8 +129,10 @@ renderQuiz();updateMain(500);updateStar();showCase();
 
     }
 
-});
-            document.addEventListener('contextmenu',   
+});</script>
+
+<script>document.addEventListener('contextmenu',   
      event => event.preventDefault()  
-);
+);</script>
+
 
